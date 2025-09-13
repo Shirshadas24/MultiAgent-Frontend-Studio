@@ -3,9 +3,10 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+*.pyc
 # C extensions
 *.so
-
+.ipynb_checkpoints/
 # Distribution / packaging
 .Python
 build/
@@ -143,7 +144,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-
+myvenv/
 # Spyder project settings
 .spyderproject
 .spyproject
