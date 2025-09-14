@@ -2,7 +2,7 @@
 
 **An AI-Powered Multi-Agent Frontend Development System**
 
-AgentCode Frontend is an intelligent, multi-agent system that transforms natural language descriptions into production-ready frontend code. Built with LangGraph and Streamlit, it orchestrates specialized AI agents to enhance prompts, generate code, and validate results through an interactive workflow.
+MultiAgent Frontend Studio is an intelligent, multi-agent system that transforms natural language descriptions into production-ready frontend code. Built with LangGraph and Streamlit, it orchestrates specialized AI agents to enhance prompts, generate code, and validate results through an interactive workflow.
 
 ## ✨ Features
 
