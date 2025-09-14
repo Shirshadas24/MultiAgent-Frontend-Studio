@@ -13,7 +13,6 @@ import time
 
 st.set_page_config(page_title="Agentic Frontend Developer", page_icon="🤖")
 
-# --- Utility Functions ---
 def generate_thread_name(user_question: str):
     """Generate a thread name from the first 5 words + timestamp"""
     prompt_words = user_question.lower().split()[:5]
@@ -83,7 +82,6 @@ def process_agent_stream(user_input, thread_name, is_feedback=False):
                     st.rerun()
 
 
-# --- Session State Initialization ---
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "show_preview" not in st.session_state:
@@ -97,10 +95,8 @@ if "thread_id" not in st.session_state:
 ##new
 if "chat_threads" not in st.session_state:
     from agent import retrieve_all_threads
-    # initialize as dict with empty messages for each thread_id
     st.session_state.chat_threads = {tid: [] for tid in retrieve_all_threads()}
 
-# --- Sidebar UI ---
 st.sidebar.title("📂 My Projects")
 
 if st.sidebar.button("➕ New Project"):
@@ -123,12 +119,10 @@ for tid in list(st.session_state['chat_threads'].keys())[::-1]:
     if st.sidebar.button(str(tid)):
         st.session_state['thread_id'] = tid
 
-        # load messages back from LangGraph DB
         from agent import app
         state = app.get_state(config={"configurable": {"thread_id": tid}})
         msgs = state.values["messages"]
 
-        # normalize into your {role, content} format
         temp_messages = []
         for msg in msgs:
             if isinstance(msg, HumanMessage):
@@ -141,7 +135,6 @@ for tid in list(st.session_state['chat_threads'].keys())[::-1]:
         st.session_state['latest_code'] = get_latest_code_from_messages(temp_messages)
         st.session_state['show_preview'] = False
 
-# --- Main UI ---
 st.title("🤖 Agentic Frontend Developer")
 st.markdown("Your personal AI assistant for building frontend code.")
 
@@ -164,7 +157,6 @@ if st.session_state.show_preview:
     if user_feedback:
         feedback_clean = user_feedback.strip().lower()
         if feedback_clean in ["ok", "ok.", "yes", "looks good", "bye"]:
-            # ✅ Finalize directly
             final_code_content = st.session_state.latest_code
             html_code, css_code, js_code = parse_code(final_code_content)
 
@@ -193,7 +185,7 @@ if st.session_state.show_preview:
             st.rerun()
 
         else:
-            # 🚀 Continue agent workflow
+            # Continue agent workflow
             st.session_state.messages.append({"role": "user", "content": user_feedback})
             if not st.session_state.thread_id:
                 st.session_state.thread_id = generate_thread_name("project")
@@ -206,7 +198,6 @@ else:
     if user_request:
         st.session_state.messages.append({"role": "user", "content": user_request})
 
-        # First message of a new thread → use it as thread name
         if not st.session_state.thread_id:
             st.session_state.thread_id = generate_thread_name(user_request)
             add_thread(st.session_state.thread_id)
@@ -215,14 +206,12 @@ else:
         st.rerun()
 
 
-# --- Code Download Buttons ---
 if any("Final Code Approved!" in msg.get("content", "") for msg in st.session_state.messages):
     final_code_content = get_latest_code_from_messages(st.session_state.messages)
     if final_code_content:
         html_code, css_code, js_code = parse_code(final_code_content)
 
         ##
-# Fix: Make index.html reference the external files
         html_with_links = f"""
 <!DOCTYPE html>
 <html lang="en">
@@ -239,7 +228,6 @@ if any("Final Code Approved!" in msg.get("content", "") for msg in st.session_st
 </html>
 """
 
-# Now offer downloads
         st.download_button(
     label="Download index.html",
     data=html_with_links,

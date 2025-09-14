@@ -189,7 +189,6 @@ def parse_code(content: str):
     css_code = ""
     js_code = ""
 
-    # Updated regex to be more flexible with whitespace and newlines
     html_match = re.search(r"```html\s*([\s\S]*?)\s*```", content)
     if html_match:
         html_code = html_match.group(1).strip()
@@ -277,12 +276,7 @@ def validator_node(state: MessagesState) -> Command[Literal["supervisor", "__end
             goto="supervisor"
         )
 
-    # NO MORE 'input()' or 'display(HTML)' calls here.
-    # The Streamlit frontend will now handle the human feedback loop.
-    # We will now assume LLM validation is sufficient to proceed to END.
-    # The 'validator' node will now handle both approval and rejection by the user.
-        # --- Start of Human Feedback Logic (Modified) ---
-    # Find the most recent user message in the state
+
     human_feedback_message = None
     for msg in reversed(state["messages"]):
         if msg.type == "human":
@@ -292,10 +286,8 @@ def validator_node(state: MessagesState) -> Command[Literal["supervisor", "__end
     if human_feedback_message:
         feedback_content = human_feedback_message.content.strip().lower()
     else:
-        # No human feedback found, assume the loop continues
         feedback_content = ""
-    # User feedback is now received from the streamlit frontend
-    # The message content determines the next action
+
     # human_feedback_message = state["messages"][-1]
     # feedback_content = human_feedback_message.content.strip().lower()
 
