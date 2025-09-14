@@ -69,7 +69,7 @@ User Request → Supervisor →→ Code Developer → Validator → User Review 
 
 4. **Run the application**
    ```bash
-   streamlit run streamlit_app.py
+   streamlit run app.py
    ```
 
 5. **Open your browser** to `http://localhost:8501`
@@ -112,7 +112,7 @@ ipython
 ```
 agentcode-frontend/
 ├── agent.py              # Multi-agent system logic
-├── streamlit_app.py      # Streamlit frontend interface
+├── app.py                # Streamlit frontend interface
 ├── .env                  # Environment variables (not in repo)
 ├── requirements.txt      # Python dependencies
 ├── chatbot.db           # SQLite database for persistence
