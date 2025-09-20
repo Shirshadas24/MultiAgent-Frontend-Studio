@@ -52,7 +52,7 @@ def supervisor_node(state: MessagesState) -> Command[Literal["enhancer", "code_d
         {"role": "system", "content": system_prompt},  
     ] + state["messages"] 
     llm= ChatCohere(
-    model="command-r",
+    model="command-r-plus-08-2024",
     cohere_api_key=os.getenv("COHERE_API_KEY"))
     response = llm.with_structured_output(Supervisor).invoke(messages)
 

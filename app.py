@@ -145,14 +145,21 @@ if st.session_state.show_preview:
 
     html_code, css_code, js_code = parse_code(st.session_state.latest_code)
 
-    full_html = f"""
+    # full_html = f"""
+    # <style>{css_code}</style>
+    # {html_code}
+    # <script>{js_code}</script>
+    # """
+
+    # st.components.v1.html(full_html, height=500)
+    scrollable_html = f"""
+<div style="height:500px; overflow:auto; border:1px solid #ccc; padding:10px;">
     <style>{css_code}</style>
     {html_code}
     <script>{js_code}</script>
-    """
-
-    st.components.v1.html(full_html, height=500)
-
+</div>
+"""
+    st.components.v1.html(scrollable_html, height=500)
     user_feedback = st.text_input("Please provide feedback or type 'ok' to approve:", key="feedback_input")
     if user_feedback:
         feedback_clean = user_feedback.strip().lower()
