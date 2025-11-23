@@ -6,3 +6,8 @@ langchain-groq==0.3.7
 langchain-cohere==0.4.5
 python-dotenv==1.1.1
 pydantic==2.11.7
+cohere==5.17.0
+groq==0.31.0
+protobuf==6.31.1
+typing-extensions==4.14.1
+ipython==8.12.3
