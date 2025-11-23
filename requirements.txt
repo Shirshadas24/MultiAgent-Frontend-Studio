@@ -1,6 +1,8 @@
 streamlit==1.49.1
 langchain-core==0.3.72
 langgraph==0.6.7
+langgraph-checkpoint-sqlite
+
 langchain-google-genai==2.1.9
 langchain-groq==0.3.7
 langchain-cohere==0.4.5
